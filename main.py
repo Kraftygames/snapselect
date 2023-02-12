@@ -1,14 +1,17 @@
-import gradio as gr
+import tkinter as tk
+from tkinter import filedialog
+from PIL import Image, ImageTk, ImageOps
+import os
+import random
 
 
-def greet(name):
-    return "Hello " + name + "!"
+
+def display_images(folder):
+
 
 
 def main():
-    demo = gr.Interface(fn=greet, inputs="text", outputs="text")
-    demo.launch
-
+    pass
 
 if __name__ == '__main__':
     main()

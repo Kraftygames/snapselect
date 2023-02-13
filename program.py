@@ -1,56 +1,48 @@
 import tkinter as tk
-from tkinter import PhotoImage
-from random import choice
 import images
-import selection_logic
 from PIL import ImageTk, Image
 
 
-def update_images(root):
+def click_application(root):
+
     for widget in root.winfo_children():
         widget.destroy()
 
-    selected_images = function_b()
+    root.images_app = images.ImageSelection(r'C:\Users\vince\OneDrive - Malayan Colleges Mindanao (A Mapúa School)\School\S.Y. 2022 - 2023\Student Council\MIECES\Bomber Jacket\hornet\step 2')
+    root.images_app.sample_images(2)
 
     # clear all widgets from the root window
-    my_button1 = tk.Button(root, text="Click Me!", command=update_images)
-    my_button1.pack()
-
-    my_button2 = tk.Button(root, text="Click Me!", command=update_images)
-    my_button2.pack()
-
     # create a list to store the image objects
-    root.images = []
-
-    # create a label for each image
-    for image_path in selected_images:
-        image_post = Image.open(image_path)
-        resized_image = image_post.resize((512, 512), Image.Resampling.LANCZOS)
-        converted_image = ImageTk.PhotoImage(resized_image)
-
-        root.images.append(converted_image)
-
-        my_label = tk.Label(root, image=converted_image, width=512, height=512)
-        my_label.pack()
-        my_label.bind("<Button-1>", on_image_click)
+    root.image_bin = []
 
 
-def score(lst_img):
-    for imager in lst_img:
+    #left image
+    left_image = root.images_app.get_image_object(index=0, resolution=(512, 512))
+    root.image_bin.append(left_image)
+    left_image_display = tk.Label(root, image=root.image_bin[0], width=512, height=512)
+    left_image_display.grid(row=0, column=0)
+    left_image_display.bind("<Button-1>", lambda e: score_it(root, 0))
 
 
-def on_image_click(root, event):
-    # record which image was clicked
-    clicked_image_path = event.widget.cget("image")
-    print(clicked_image_path)
+    #right image
+    right_image = root.images_app.get_image_object(index=1, resolution=(512,512))
+    root.image_bin.append(right_image)
+    right_image_display = tk.Label(root, image=root.image_bin[1], width=512, height=512)
+    right_image_display.grid(row=0, column=1)
+    right_image_display.bind("<Button-1>", lambda e: score_it(root, 1))
 
-    new_images = function_b()
-    update_images(root, new_images)
+
+
+
+def score_it(root, index):
+    root.images_app.increase_score(root.images_app.selected_images[index])
+    click_application(root)
 
 
 def main():
     root = tk.Tk()
-    update_images(root)
+    click_application(root)
+    print(root.images_app.scores)
     root.mainloop()
 
 

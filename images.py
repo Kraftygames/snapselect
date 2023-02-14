@@ -47,8 +47,16 @@ class ImageSelection:
         self.selected_images = random.sample(self.images, qty)
         return self.selected_images
 
-    def get_image_object(self, index, resolution=None):
+    def get_image_object_from_selection(self, index, resolution=None):
         original_image = Image.open(self.selected_images[index])
+
+        if resolution is not None:
+            original_image = original_image.resize(resolution, Image.Resampling.LANCZOS)
+
+        return ImageTk.PhotoImage(original_image)
+
+    def get_image_object(self, path, resolution=None):
+        original_image = Image.open(path)
 
         if resolution is not None:
             original_image = original_image.resize(resolution, Image.Resampling.LANCZOS)

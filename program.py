@@ -13,7 +13,6 @@ def image_click(index):
     else:
         update_image_display()
 
-
     step.clear()
     step.append(step_number + 1)
     return
@@ -28,6 +27,7 @@ def get_max_key(dictionary):
             max_key = key
     return max_key
 
+
 def final_display():
     for widget in photo_wrapper.winfo_children():
         widget.destroy()
@@ -40,11 +40,15 @@ def final_display():
     left_image_display = tk.Label(photo_wrapper, image=image_bin[0], width=512, height=512)
     left_image_display.pack()
 
-    path_text = tk.Entry(photo_wrapper)
-    path_text.insert(tk.INSERT, best_image)
-    path_text.pack()
+    # path_text = tk.Entry(photo_wrapper)
+    # path_text.insert(tk.INSERT, best_image)
+    # path_text.pack()
 
-    left_image_display.bind("<Button-1>", lambda e: image_click(0))
+    score_display = tk.Label(photo_wrapper, text=f"Score: {image_app.scores.get(best_image)}")
+    score_display.pack()
+
+    root.unbind_all("<Left>")
+    root.unbind_all("<Right>")
 
 
 def update_image_display():
@@ -67,6 +71,9 @@ def update_image_display():
     right_image_display.grid(row=0, column=1)
     right_image_display.bind("<Button-1>", lambda e: image_click(1))
 
+    root.bind("<Left>", lambda event: image_click(0))
+    root.bind("<Right>", lambda event: image_click(1))
+
 
 def file_function():
     global step
@@ -78,16 +85,12 @@ def file_function():
     return
 
 
-
 root = tk.Tk()
 
-directory_button = tk.Button(root, text='Browse...', command=lambda :file_function())
+directory_button = tk.Button(root, text='Browse...', command=lambda: file_function())
 directory_button.pack()
 
 photo_wrapper = tk.Frame(root)
 photo_wrapper.pack()
 image_bin = []
-
-
 root.mainloop()
-

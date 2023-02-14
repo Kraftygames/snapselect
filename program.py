@@ -1,6 +1,5 @@
 import tkinter as tk
 import images
-from PIL import ImageTk, Image
 from tkinter import filedialog
 
 

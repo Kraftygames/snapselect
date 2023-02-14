@@ -16,7 +16,6 @@ def image_click(index):
 
     step.clear()
     step.append(step_number + 1)
-    print(image_app.scores.values())
     return
 
 

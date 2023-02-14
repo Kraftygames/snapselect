@@ -4,6 +4,10 @@ from tkinter import filedialog
 
 
 def image_click(index):
+    if index is None:
+        update_image_display()
+        return
+
     image_app.increase_score(image_app.selected_images[index])
 
     step_number = step[0]
@@ -49,6 +53,7 @@ def final_display():
 
     root.unbind_all("<Left>")
     root.unbind_all("<Right>")
+    root.unbind_all("<Down>")
 
 
 def update_image_display():
@@ -73,6 +78,7 @@ def update_image_display():
 
     root.bind("<Left>", lambda event: image_click(0))
     root.bind("<Right>", lambda event: image_click(1))
+    root.bind("<Down>", lambda event: image_click(None))
 
 
 def file_function():
